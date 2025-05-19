@@ -1,27 +1,32 @@
-// Administrador.jsx
 import React from "react";
 import { Container, Table, Spinner, Alert, Image } from "react-bootstrap";
-import { useAuth } from "../context/AuthContext";
-import DataProductos from "../hooks/DataProductos";
-import Button from "../componentes/Button";
-import { FaTrash, FaEdit } from "react-icons/fa"; // Importa los iconos de react-icons/fa
+import { useAuth } from "../context/AuthContext"; // Hook personalizado para obtener el usuario autenticado
+import DataProductos from "../hooks/DataProductos"; // Hook personalizado para obtener los datos de productos
+import Button from "../componentes/Button"; // Componente de botón reutilizable
+import { FaTrash, FaEdit } from "react-icons/fa"; // Iconos de edición y eliminación
 
 function Administrador() {
+  // Obtener el usuario autenticado desde el contexto
   const { usuario } = useAuth();
+
+  // Obtener datos de productos desde la API usando el hook personalizado
   const { data, loading, error } = DataProductos(
     "https://fakestoreapi.com/products"
   );
 
+  // Función manejadora para la acción de editar un producto
   const handleEditarProducto = (id) => {
     console.log(`Función de editar producto con ID: ${id}`);
-    // Aquí va tu lógica para editar el producto con este ID
+    // Aquí se integraría la lógica para editar el producto
   };
 
+  // Función manejadora para la acción de eliminar un producto
   const handleEliminarProducto = (id) => {
     console.log(`Función de eliminar producto con ID: ${id}`);
-    // Aquí va tu lógica para eliminar el producto con este ID
+    // Aquí se integraría la lógica para eliminar el producto
   };
 
+  // Mostrar spinner de carga mientras se obtienen los datos
   if (loading) {
     return (
       <Container className="text-center mt-5">
@@ -35,6 +40,7 @@ function Administrador() {
     );
   }
 
+  // Mostrar alerta de error si falla la carga de datos
   if (error) {
     return (
       <Container className="mt-5">
@@ -45,9 +51,10 @@ function Administrador() {
     );
   }
 
+  // Render principal del panel de administrador
   return (
     <Container className="mt-5">
-      {usuario ? (
+      {usuario ? ( // Verifica si hay un usuario autenticado
         <>
           <div className="text-center mb-4">
             <h2>Panel de Administración de Productos</h2>
@@ -97,6 +104,7 @@ function Administrador() {
                       <td>{producto.rating.rate}</td>
                       <td>{producto.rating.count}</td>
                       <td>
+                        {/* Botón para editar el producto */}
                         <Button
                           Icono={FaEdit}
                           variant="success"
@@ -107,9 +115,10 @@ function Administrador() {
                             marginRight: "0.2rem",
                             width: "30px",
                             height: "30px",
-                          }} // Aumenté el padding y agregué margin-right
+                          }}
                           tooltip="Editar"
                         />
+                        {/* Botón para eliminar el producto */}
                         <Button
                           Icono={FaTrash}
                           variant="danger"
@@ -119,7 +128,7 @@ function Administrador() {
                             padding: "0.0rem",
                             width: "30px",
                             height: "30px",
-                          }} // Aumenté el padding
+                          }}
                           tooltip="Eliminar"
                         />
                       </td>
@@ -130,9 +139,10 @@ function Administrador() {
           </div>
         </>
       ) : (
+        // Si no hay usuario autenticado, mostrar mensaje
         <div className="text-center">
           <p>Cargando información del administrador...</p>
-          {/* O podrías mostrar un mensaje de "No autorizado" si el usuario no está autenticado */}
+          {/* Alternativamente, aquí podrías mostrar "Acceso no autorizado" */}
         </div>
       )}
     </Container>
