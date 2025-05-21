@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import usuarios from "../data/usuarios"
 
 const AuthContext = createContext();
 
@@ -7,11 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [usuario, setUsuario] = useState(null);
     const navigate = useNavigate();
 
-    const usuarios = [
-        { nombre: "Juan Pérez", usuario: "juan123", password: "clave123", email: "juan@example.com" },
-        { nombre: "Ana López", usuario: "ana456", password: "secreta456", email: "ana@example.com" },
-        { nombre: "Administrador", usuario: "admin", password: "admin123", email: "admin@example.com", role: "admin" },
-    ];
+    
 
     const login = (username, password) => {
         const user = usuarios.find(u => u.usuario === username && u.password === password);
@@ -19,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         if (user) {
             setUsuario(user);
             localStorage.setItem("usuario", JSON.stringify(user));
-            navigate(user.role === "admin" ? "/administrador" : "/"); // Redirige después del login
+            navigate(user.rol === "admin" ? "/administrador" : "/"); // Redirige después del login
             return { success: true, user }; // Devuelve el usuario
         }
         return { success: false, message: "Credenciales inválidas" };
@@ -38,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
-    const esAdministrador = () => usuario?.role === "admin";
+    const esAdministrador = () => usuario?.rol === "admin";
 
     return (
         <AuthContext.Provider value={{ usuario, login, logout, esAdministrador }}>

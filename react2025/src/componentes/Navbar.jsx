@@ -18,6 +18,10 @@ function MiNavbar() {
   const logoInicio = "/tuhogar.png";
   const logoSesionIniciada = "/tuhogar.png";
 
+  // Determina si el usuario actual es un administrador
+  // Asume que el objeto 'usuario' tiene una propiedad 'rol'
+  const esAdministrador = usuario && usuario.rol === "admin";
+
   // Solo se muestra el dropdown de productos si la ruta actual es "/"
   const mostrarDropdown = location.pathname === "/";
 
@@ -47,67 +51,69 @@ function MiNavbar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
         {/* Contenido del menú colapsable */}
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            {/* Links de navegación principales */}
-            <Nav.Link as={Link} to="/" active={location.pathname === "/" } style={location.pathname === "/" ? activeLinkStyle : {}}>
-              Inicio
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/nosotros"
-              active={location.pathname === "/nosotros"}
-              style={location.pathname === "/nosotros" ? activeLinkStyle : {}}
-            >
-              Nosotros
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to="/contacto"
-              active={location.pathname === "/contacto"}
-              style={location.pathname === "/contacto" ? activeLinkStyle : {}}
-            >
-              Contacto
-            </Nav.Link>
-            {usuario && (
+        {!esAdministrador && (
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              {/* Links de navegación principales */}
+              <Nav.Link as={Link} to="/" active={location.pathname === "/"} style={location.pathname === "/" ? activeLinkStyle : {}}>
+                Inicio
+              </Nav.Link>
               <Nav.Link
                 as={Link}
-                to="/perfil"
-                active={location.pathname === "/perfil"}
-                style={location.pathname === "/perfil" ? activeLinkStyle : {}}
+                to="/nosotros"
+                active={location.pathname === "/nosotros"}
+                style={location.pathname === "/nosotros" ? activeLinkStyle : {}}
               >
-                Perfil
+                Nosotros
               </Nav.Link>
-            )}
+              <Nav.Link
+                as={Link}
+                to="/contacto"
+                active={location.pathname === "/contacto"}
+                style={location.pathname === "/contacto" ? activeLinkStyle : {}}
+              >
+                Contacto
+              </Nav.Link>
+              {usuario && (
+                <Nav.Link
+                  as={Link}
+                  to="/perfil"
+                  active={location.pathname === "/perfil"}
+                  style={location.pathname === "/perfil" ? activeLinkStyle : {}}
+                >
+                  Perfil
+                </Nav.Link>
+              )}
 
-            {/* Dropdown de categorías (solo en la página de inicio) */}
-            {mostrarDropdown && (
-              <NavDropdown title="Productos" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => setCategoryFilter(null)}>
-                  Todos
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => setCategoryFilter("electronics")}
-                >
-                  Informática
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => setCategoryFilter("men's clothing")}
-                >
-                  Indumentaria Masculina
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => setCategoryFilter("women's clothing")}
-                >
-                  Indumentaria Femenina
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => setCategoryFilter("jewelery")}>
-                  Bijouterie
-                </NavDropdown.Item>
-              </NavDropdown>
-            )}
-          </Nav>
-        </Navbar.Collapse>
+              {/* Dropdown de categorías (solo en la página de inicio y si NO es administrador) */}
+              {mostrarDropdown && (
+                <NavDropdown title="Productos" id="basic-nav-dropdown">
+                  <NavDropdown.Item onClick={() => setCategoryFilter(null)}>
+                    Todos
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => setCategoryFilter("electronics")}
+                  >
+                    Informática
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => setCategoryFilter("men's clothing")}
+                  >
+                    Indumentaria Masculina
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => setCategoryFilter("women's clothing")}
+                  >
+                    Indumentaria Femenina
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={() => setCategoryFilter("jewelery")}>
+                    Bijouterie
+                  </NavDropdown.Item>
+                </NavDropdown>
+              )}
+            </Nav>
+          </Navbar.Collapse>
+        )}
 
         {/* Zona derecha del navbar: login/logout y carrito */}
         <div className="d-flex ms-auto align-items-center">
