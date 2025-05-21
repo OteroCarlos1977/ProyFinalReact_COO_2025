@@ -52,7 +52,7 @@ function Carrito() {
             <Container className="mt-4 text-center">
                 <h2>Carrito de Compras</h2>
                 <Alert variant="info" className="mt-3">Tu carrito está vacío.</Alert>
-                <Button variant="secondary" className="mt-3" onClick={() => navigate('/')} texto="Volver a la Tienda" />
+                <Button variant="primary" className="mt-3" onClick={() => navigate('/')} texto="Volver a la Tienda" />
             </Container>
         );
     }
@@ -106,7 +106,7 @@ function Carrito() {
 
             {/* Botones de acción: seguir comprando o finalizar */}
             <div className="mt-3 d-flex justify-content-between flex-wrap">
-                <Button variant="secondary" onClick={() => navigate('/')} className="mb-2" texto="Seguir Comprando" />
+                <Button variant="primary" onClick={() => navigate('/')} className="mb-2" texto="Seguir Comprando" />
                 <Button variant="success" className="mb-2" onClick={finalizarCompra} texto="Finalizar Compra" />
             </div>
         </Container>
