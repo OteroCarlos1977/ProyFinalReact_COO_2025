@@ -25,7 +25,7 @@ function useFetchData(url) {
       try {
         // Realiza la petición fetch a la URL proporcionada
         const response = await fetch(url);
-        // Lanza un error si la respuesta no es exitosa (código diferente a 2xx)
+        // Lanza un error si la respuesta no es exitosa (código diferente a 200)
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }

@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 // Importación de componentes de Bootstrap y utilidades
-import { Card, Container, Row, Col, Spinner, Alert, Form, FormControl } from "react-bootstrap";
+import { Card, Container, Row, Col, Spinner, Alert, Form, FormControl} from "react-bootstrap";
 import Button from "./Button"; // Componente de botón personalizado
 import { FaShoppingCart } from "react-icons/fa"; // Ícono de carrito
 import { useCarrito } from "../context/CarritoContext"; // Contexto para manejar el carrito de compras
-import { useCategoryFilter } from '../context/CategoryFilterContext'; // Contexto para el filtro por categoría
-import Swal from 'sweetalert2'; // Librería para mostrar alertas
-import DataProductos from '../hooks/DataProductos'; // Hook personalizado para obtener productos
+import { useCategoryFilter } from "../context/CategoryFilterContext"; // Contexto para el filtro por categoría
+import Swal from "sweetalert2"; // Librería para mostrar alertas
+import DataProductos from "../hooks/DataProductos"; // Hook personalizado para obtener productos
 
 function Cards() {
+  //Inicializo el useNavigate, para ir entre paginas
+  const navigate = useNavigate();
+
   // Estado local para el término de búsqueda
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   // Hook personalizado que obtiene los productos desde una API externa
-  const { data, loading, error } = DataProductos("https://fakestoreapi.com/products");
+  const { data, loading, error } = DataProductos(
+    "https://fakestoreapi.com/products"
+  );
 
   // Estado local que almacena los productos ya filtrados
   const [filteredDatos, setFilteredDatos] = useState([]);
@@ -30,15 +36,20 @@ function Cards() {
 
     // Filtrar por categoría si se seleccionó alguna
     if (categoryFilter) {
-      resultadosFiltrados = resultadosFiltrados.filter(producto => producto.category === categoryFilter);
+      resultadosFiltrados = resultadosFiltrados.filter(
+        (producto) => producto.category === categoryFilter
+      );
     }
 
     // Filtrar por término de búsqueda (título o descripción)
     if (searchTerm) {
       const textoBusqueda = searchTerm.toLowerCase();
-      resultadosFiltrados = resultadosFiltrados.filter(producto =>
-        (producto.title && producto.title.toLowerCase().includes(textoBusqueda)) ||
-        (producto.description && producto.description.toLowerCase().includes(textoBusqueda))
+      resultadosFiltrados = resultadosFiltrados.filter(
+        (producto) =>
+          (producto.title &&
+            producto.title.toLowerCase().includes(textoBusqueda)) ||
+          (producto.description &&
+            producto.description.toLowerCase().includes(textoBusqueda))
       );
     }
 
@@ -54,7 +65,7 @@ function Cards() {
       text: `${producto.title} se ha agregado al carrito.`,
       icon: "success",
       timer: 1500,
-      showConfirmButton: false
+      showConfirmButton: false,
     });
   };
 
@@ -103,7 +114,12 @@ function Cards() {
             aria-label="Buscar"
             value={searchTerm}
             onChange={handleSearchChange}
-            style={{ width: '50%', border: '1px solid #ccc', padding: '5px', borderRadius: '5px' }}
+            style={{
+              width: "50%",
+              border: "1px solid #ccc",
+              padding: "5px",
+              borderRadius: "5px",
+            }}
           />
         </Form>
       </div>
@@ -115,27 +131,51 @@ function Cards() {
             <Col key={producto.id} className="d-flex justify-content-center">
               <Card className="shadow-sm w-100 d-flex flex-column h-100">
                 {/* Título del producto */}
-                <Card.Title className="p-2" style={{ fontSize: "1rem", minHeight: '3em' }}>
+                <Card.Title
+                  className="p-2"
+                  style={{ fontSize: "1rem", minHeight: "3em" }}
+                >
                   {producto.title}
                 </Card.Title>
 
                 {/* Imagen del producto */}
-                <div className="d-flex justify-content-center align-items-center p-3" style={{ height: '200px', overflow: 'hidden' }}>
+                <div
+                  className="d-flex justify-content-center align-items-center p-3"
+                  style={{ height: "200px", overflow: "hidden" }}
+                >
                   <Card.Img
                     variant="top"
                     src={producto.image}
                     alt={producto.title}
-                    style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+                    title= "Ver Detalle" 
+                    style={{
+                      maxHeight: "100%",
+                      maxWidth: "100%",
+                      objectFit: "contain",
+                      cursor: "pointer", 
+                    }}
+                    onClick={() => navigate(`/producto/${producto.id}`)}
                   />
                 </div>
 
                 {/* Cuerpo de la tarjeta con descripción, precio y botón */}
                 <Card.Body className="d-flex flex-column p-2">
-                  <Card.Text style={{ fontSize: "0.8rem", flexGrow: 1, overflow: 'hidden', textOverflow: 'ellipsis', WebkitLineClamp: '3', WebkitBoxOrient: 'vertical' }}>
+                  <Card.Text
+                    style={{
+                      fontSize: "0.8rem",
+                      flexGrow: 1,
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      WebkitLineClamp: "3",
+                      WebkitBoxOrient: "vertical",
+                    }}
+                  >
                     {producto.description}
                   </Card.Text>
                   <Card.Text className="mt-auto pt-2">
-                    <strong>Precio:</strong> ${(producto.price * 1000).toFixed(2)} {/* Se multiplica para simular moneda local */}
+                    <strong>Precio:</strong> $
+                    {(producto.price * 1000).toFixed(2)}{" "}
+                    {/* Se multiplica para simular moneda local */}
                   </Card.Text>
 
                   {/* Botón de comprar */}

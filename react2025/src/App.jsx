@@ -11,7 +11,10 @@ import Administrador from "./pages/Administrador";
 import Carrito from "./componentes/Carrito";
 import Footer from "./componentes/Footer";
 import Navbar from "./componentes/Navbar";
+import DetalleProducto from "./componentes/DetalleProducto";
 import ProtectedRoute from "./context/ProtectedRoute";
+import "./App.css";
+import PerfilUsuario from "./pages/PerfilUsuario";
 
 function App() {
     return (
@@ -19,23 +22,37 @@ function App() {
             <AuthProvider>
                 <CarritoProvider>
                     <CategoryFilterProvider>  {/* Envolver la app con el Provider */}
-                        <Navbar />
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/nosotros" element={<Nosotros />} />
-                            <Route path="/contacto" element={<Contacto />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/carrito" element={<Carrito />} />
-                            <Route
-                                path="/administrador"
-                                element={
-                                    <ProtectedRoute adminOnly={true}>
-                                        <Administrador />
-                                    </ProtectedRoute>
-                                }
-                            />
-                        </Routes>
-                        <Footer />
+                        <div className="app-container">
+                            <Navbar />
+                            <main className="app-content">
+                                <Routes>
+                                    <Route path="/" element={<Home />} />
+                                    <Route path="/nosotros" element={<Nosotros />} />
+                                    <Route path="/contacto" element={<Contacto />} />
+                                    <Route path="/login" element={<Login />} />
+                                    <Route path="/carrito" element={<Carrito />} />
+                                    <Route path="/producto/:id" element={<DetalleProducto />}
+/>
+                                    <Route
+                                        path="/perfil"
+                                        element={
+                                            <ProtectedRoute>
+                                                <PerfilUsuario />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                    <Route
+                                        path="/administrador"
+                                        element={
+                                            <ProtectedRoute adminOnly={true}>
+                                                <Administrador />
+                                            </ProtectedRoute>
+                                        }
+                                    />
+                                </Routes>
+                            </main>
+                            <Footer />
+                        </div>
                     </CategoryFilterProvider>
                 </CarritoProvider>
             </AuthProvider>
