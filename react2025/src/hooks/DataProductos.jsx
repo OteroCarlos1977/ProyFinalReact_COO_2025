@@ -1,12 +1,8 @@
+// Importa hooks necesarios de React
 import { useState, useEffect } from 'react';
 
-/**
- * Hook personalizado para realizar peticiones fetch a una URL dada.
- * Retorna los datos obtenidos, el estado de carga y cualquier error.
- *
- * @param {string} url - La URL desde la cual se obtendrán los datos.
- * @returns {{ data: any, loading: boolean, error: string|null }}
- */
+/*  Hook personalizado para realizar peticiones fetch a una URL.
+ Retorna los datos obtenidos, el estado de carga y cualquier error.*/
 function useFetchData(url) {
   // Estado para almacenar los datos obtenidos
   const [data, setData] = useState(null);

@@ -1,3 +1,4 @@
+//Importación de componentes de Reac y React Dom
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 // Importación de componentes de Bootstrap y utilidades
@@ -6,17 +7,17 @@ import Button from "./Button"; // Componente de botón personalizado
 import { FaShoppingCart } from "react-icons/fa"; // Ícono de carrito
 import { useCarrito } from "../context/CarritoContext"; // Contexto para manejar el carrito de compras
 import { useCategoryFilter } from "../context/CategoryFilterContext"; // Contexto para el filtro por categoría
-import Swal from "sweetalert2"; // Librería para mostrar alertas
+import Swal from "sweetalert2"; // Alertas
 import DataProductos from "../hooks/DataProductos"; // Hook personalizado para obtener productos
 
 function Cards() {
-  //Inicializo el useNavigate, para ir entre paginas
+  //Inicializo el useNavigate, para navegar entre paginas
   const navigate = useNavigate();
 
-  // Estado local para el término de búsqueda
+  // Estado local para almacenar el término de búsqueda
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Hook personalizado que obtiene los productos desde una API externa
+  // Hook personalizado que obtiene los productos desde la API 
   const { data, loading, error } = DataProductos(
     "https://fakestoreapi.com/products"
   );
@@ -101,7 +102,7 @@ function Cards() {
       <div className="text-center mb-4">
         {!searchTerm && !categoryFilter && <h1>Nuestros Productos</h1>}
         {searchTerm && <h2>Resultados para: "{searchTerm}"</h2>}
-        {categoryFilter && !searchTerm && <h2>Nuestros Productos</h2>}
+        {categoryFilter && !searchTerm && <h2>Resultado de la Busqueda</h2>}
       </div>
 
       {/* Campo de búsqueda */}

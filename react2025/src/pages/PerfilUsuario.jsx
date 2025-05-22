@@ -1,6 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { Container } from "react-bootstrap";
 
+//Pagina simple para que renderice algo, luego se podrá modificar
 function PerfilUsuario() {
     const { usuario } = useAuth();
 

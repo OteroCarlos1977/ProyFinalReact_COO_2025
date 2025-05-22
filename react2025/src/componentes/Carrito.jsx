@@ -1,19 +1,21 @@
 
 import { useNavigate } from 'react-router-dom'; // Hook para redireccionar entre rutas
-import { Container, ListGroup, Alert, Row, Col, Image } from 'react-bootstrap'; // Componentes de Bootstrap para maquetado
+import { Container, ListGroup, Alert, Row, Col, Image } from 'react-bootstrap'; // Componentes de Bootstrap
 import Button from "./Button"; // Botón personalizado
-import { FaTrash } from "react-icons/fa"; // Icono de basurero
-import Swal from 'sweetalert2'; // Librería para mostrar alertas modernas
+import { FaTrash } from "react-icons/fa"; // Icono basurero
+import Swal from 'sweetalert2'; // Librería para mostrar alertas 
 import 'bootstrap/dist/css/bootstrap.min.css'; // Estilos de Bootstrap
 import { useCarrito } from '../context/CarritoContext'; // Hook personalizado del contexto del carrito
 
 function Carrito() {
-    const navigate = useNavigate(); // Permite redireccionar al usuario
-    const { carrito, eliminarDelCarrito, vaciarCarrito } = useCarrito(); // Accede al estado y funciones del carrito desde el contexto
+    const navigate = useNavigate(); // Redireccionar al usuario
+    // Acceder al estado y funciones del carrito desde el contexto
+    const { carrito, eliminarDelCarrito, vaciarCarrito } = useCarrito(); 
 
-    // Calcula el total de la compra sumando subtotales de cada producto
+    // Calcula el total de la compra sumando subtotales de cada producto 
+    // se lo multiplica por mil para que el precio se ajuste a la realidad
     const calcularTotal = () => {
-        return carrito.reduce((total, item) => total + item.price * item.cantidad, 0).toFixed(2);
+        return carrito.reduce((total, item) => total + item.price * item.cantidad * 1000, 0).toFixed(2);
     };
 
     // Muestra una alerta de confirmación antes de eliminar un producto del carrito
@@ -75,7 +77,7 @@ function Carrito() {
                             </Col>
                             {/* Precio unitario */}
                             <Col xs={10} md={2}>
-                                <small>Precio {item.price}</small>
+                                <small>Precio ${item.price * 1000}</small>
                             </Col>
                             {/* Cantidad seleccionada */}
                             <Col xs={6} md={2} className="text-md-end mt-2 mt-md-0">
@@ -83,7 +85,7 @@ function Carrito() {
                             </Col>
                             {/* Subtotal del producto */}
                             <Col xs={6} md={2} className="text-md-end mt-2 mt-md-0">
-                                <span>Subtotal ${(item.price * item.cantidad).toFixed(2)}</span>
+                                <span>Subtotal ${(item.price * item.cantidad * 1000).toFixed(2)}</span>
                             </Col>
                             {/* Botón para eliminar el producto */}
                             <Col xs={6} md={2} className="text-end mt-2 mt-md-0">

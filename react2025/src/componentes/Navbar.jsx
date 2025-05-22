@@ -19,7 +19,7 @@ function MiNavbar() {
   const logoSesionIniciada = "/tuhogar.png";
 
   // Determina si el usuario actual es un administrador
-  // Asume que el objeto 'usuario' tiene una propiedad 'rol'
+  // a traves del rol 
   const esAdministrador = usuario && usuario.rol === "admin";
 
   // Solo se muestra el dropdown de productos si la ruta actual es "/"

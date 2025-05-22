@@ -1,22 +1,23 @@
-// Componente para proteger rutas según el rol del usuario
-
+// Importa el componente Navigate de React Router para navegar
 import { Navigate } from "react-router-dom";
+// Importa el hook de autenticación desde el contexto
 import { useAuth } from "../context/AuthContext";
 
+// Componente para proteger rutas según el rol del usuario
 const ProtectedRoute = ({ children, adminOnly = false }) => {
-    const { usuario, esAdministrador } = useAuth();
+    const { usuario, esAdministrador } = useAuth(); // Obtiene el usuario actual y si es admin
 
-    // Verifica si el usuario está autenticado
+    // Si el usuario no está autenticado, redirige a la página de login
     if (!usuario) {
         return <Navigate to="/login" replace />;
     }
 
-    // Verifica si es una ruta solo para administradores
+    // Si la ruta es solo para administradores y el usuario no lo es, redirige al inicio
     if (adminOnly && !esAdministrador()) {
         return <Navigate to="/" replace />;
     }
 
-    // Si pasa todas las verificaciones, renderiza el componente protegido
+    // Si pasa las verificaciones, renderiza el contenido protegido
     return children;
 };
 

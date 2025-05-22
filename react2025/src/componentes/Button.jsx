@@ -8,8 +8,8 @@ function Button({
   texto,          // Texto que se mostrará dentro del botón
   style,          // Estilos inline personalizados para el botón
   onClick,        // Función que se ejecutará al hacer clic
-  Icono,          // Componente de ícono opcional (debe ser un componente React)
-  tooltip,        // Texto que se muestra como tooltip (atributo title)
+  Icono,          // Componente de ícono opcional 
+  tooltip,        // Texto que se muestra como tooltip 
   variant = "primary", // Variante visual del botón (por defecto: "primary")
   ...props        // Cualquier otra prop adicional será pasada al componente BootstrapButton
 }) {
