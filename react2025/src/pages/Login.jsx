@@ -3,11 +3,28 @@ import { Container, Form, Card } from "react-bootstrap";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useAuth } from "../context/AuthContext";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import {
+  AiFillEye,
+  AiFillEyeInvisible,
+  AiOutlineInfoCircle,
+} from "react-icons/ai";
 import Button from "../componentes/Button";
 
 // Inicializa SweetAlert con soporte para componentes React
 const MySwal = withReactContent(Swal);
+
+//Alerta circunstancial para probar el ingreso
+const handleInfoClick = () => {
+  MySwal.fire({
+    title: "Información de Acceso",
+    html: `
+      <p><strong>Administrador:</strong><br>Usuario: <code>admin</code> Clave: <code>admin123</code></p>
+      <p><strong>Usuario:</strong><br>Usuario: <code>user</code> Clave: <code>user123</code></p>
+    `,
+    icon: "info",
+    confirmButtonText: "Cerrar",
+  });
+};
 
 function Login() {
   // Estado para almacenar el nombre de usuario ingresado
@@ -54,6 +71,15 @@ function Login() {
     <Container className="mt-5" style={{ maxWidth: "400px" }}>
       <Card>
         <Card.Body>
+          {/*Se agrega info para la prueba de usario/administrador*/}
+          <div className="d-flex justify-content-end">
+            <AiOutlineInfoCircle
+              size={24}
+              style={{ cursor: "pointer", color: "#007bff" }}
+              title="Información de acceso"
+              onClick={handleInfoClick}
+            />
+          </div>
           <Card.Title className="mb-4 text-center">Iniciar Sesión</Card.Title>
           <Form onSubmit={handleSubmit}>
             {/* Campo para ingresar el nombre de usuario */}
@@ -84,8 +110,12 @@ function Login() {
                   onClick={togglePasswordVisibility}
                   texto="" // Sin texto, solo muestra el ícono
                   Icono={showPassword ? AiFillEyeInvisible : AiFillEye}
-                  style={{ width: "50px", height: "40px", backgroundColor:"#007bff", color:"white"}}
-                  
+                  style={{
+                    width: "50px",
+                    height: "40px",
+                    backgroundColor: "#007bff",
+                    color: "white",
+                  }}
                 ></Button>
               </div>
             </Form.Group>

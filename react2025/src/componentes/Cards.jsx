@@ -102,7 +102,7 @@ function Cards() {
       <div className="text-center mb-4">
         {!searchTerm && !categoryFilter && <h1>Nuestros Productos</h1>}
         {searchTerm && <h2>Resultados para: "{searchTerm}"</h2>}
-        {categoryFilter && !searchTerm && <h2>Resultado de la Busqueda</h2>}
+        {categoryFilter && !searchTerm && <h2>Productos Seleccionados</h2>}
       </div>
 
       {/* Campo de búsqueda */}
@@ -126,7 +126,7 @@ function Cards() {
       </div>
 
       {/* Renderizado de productos */}
-      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+      <Row className="row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 justify-content-center">
         {filteredDatos.length > 0 ? (
           filteredDatos.map((producto) => (
             <Col key={producto.id} className="d-flex justify-content-center">
@@ -161,7 +161,7 @@ function Cards() {
 
                 {/* Cuerpo de la tarjeta con descripción, precio y botón */}
                 <Card.Body className="d-flex flex-column p-2">
-                  <Card.Text
+                  {/*<Card.Text
                     style={{
                       fontSize: "0.8rem",
                       flexGrow: 1,
@@ -172,7 +172,7 @@ function Cards() {
                     }}
                   >
                     {producto.description}
-                  </Card.Text>
+                  </Card.Text>*/}
                   <Card.Text className="mt-auto pt-2">
                     <strong>Precio:</strong> $
                     {(producto.price * 1000).toFixed(2)}{" "}
